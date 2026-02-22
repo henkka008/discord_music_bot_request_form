@@ -3,15 +3,20 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from werkzeug.security import generate_password_hash
+from models import User, DiscordChannel
+import os
 
 db = SQLAlchemy()
-login_manager = LoginManager
+login_manager = LoginManager()
 
 def create_app():
     app = Flask(__name__)
     app.config["SECRET_KEY"] = "dev_change_me"
-    app.config["SQLALCHEMY_DATABSE_URI"] = "sqlite:///app.db"
-    app.config["SQALCHEMY_TRACK_MODIFICATIONS"] = False
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    app.config["ADMIN_INVITE_CODE"] = os.environ.get("ADMIN_INVITE_CODE", "visaisgreat")
+    
 
     db.init_app(app)
     login_manager.init_app(app)
@@ -19,6 +24,7 @@ def create_app():
 
     from models import User
 
+    @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
     

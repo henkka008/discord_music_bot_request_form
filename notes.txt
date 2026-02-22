@@ -1,0 +1,8 @@
+to implement
+-Email or Discord DM notification
+-Audit log: who approved, when, admin note, etc.
+-Real-time updates using WebSockets (Flask-SocketIO)
+-html templates
+-date/time input formatting so your example 1.1.2026 17:00-19:00 displays nicely on the dashboard
+-admin can update the pending request to request more information which user needs to specify
+-when admin declines he can also add comment to why it was declined
