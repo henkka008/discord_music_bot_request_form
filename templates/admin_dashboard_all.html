@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - All Requests</title>
+</head>
+<body>
+    <h2>Admin Dashboard (All)</h2>
+    
+    <p>
+        Logged in as <b>{{ current_user.username }}</b>
+        | <a href="/logout">Logout</a>
+    </p>
+
+    <p>
+        <a href="/admin/pending"><button>Pending view</button></a>
+        <a href="/admin/all"><button>View all requests</button></a>
+    </p>
+
+    <hr>
+
+    <p>
+        Filter:
+        <a href="/admin/all"><button {% if not status %}disabled{% endif %}>All</button></a>
+        <a href="/admin/all?status=PENDING"><button { if status == "PENDING" %}disabled{% endif %}>Pending</button></a>
+        <a href="/admin/all?status=APPROVED"><button { if status == "APPROVED" %}disabled{% endif %}>Approved</button></a>
+        <a href="/admin/all?status=DECLINED"><button { if status == "DECLINED" %}disabled{% endif %}>Declined</button></a>
+    </p>
+    {% if requests %}
+    {% for req in requests %}
+    <div style="border:1px solid #ddd; padding:12px; margin:10px 0;">
+        <p><b>ID:</b> {{ req.id }} | <b>Status:</b> {{ req.status }}</p>
+        <p><b>User:</b> {{ req.user.username }}</p>
+        <p><b>Channel:</b> {{ req.channel.name }}</p>
+        <p><b>Music type:</b> {{ req.music_type }}</p>
+        <p>
+            <b>Date:</b> {{ req.date_from }} - {{ req.date_to }}<br>
+            <b>Time:</b> {{ req.time_from.strftime("%H:%M") }} - {{ req.time_to.strftime("%H:%M") }}<br>
+        </p>
+
+        {% if req.stauts == "PENDING" %}
+        <form method="POST" action="/admin/set-status/{{ req.id }}">
+            <button name="status" value="APPROVED" type="submit">Approve</button>
+            <button name="status" value="DECLINED" type="submit">Decline</button>
+        </form>
+        {% endif %}
+    </div>
+    {% endfor %}
+    {% else %}
+    <p>No requests found.</p>
+    {% endif %}
+</body>
+</html>

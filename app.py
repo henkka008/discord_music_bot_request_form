@@ -1,14 +1,10 @@
 #first step
 
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
-from werkzeug.security import generate_password_hash
-from models import User, DiscordChannel
+from extensions import db, login_manager
 import os
 
-db = SQLAlchemy()
-login_manager = LoginManager()
+
 
 def create_app():
     app = Flask(__name__)

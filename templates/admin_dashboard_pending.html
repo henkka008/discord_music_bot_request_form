@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Pending Requests</title>
+</head>
+<body>
+    <h2>Admin Dashboard (Pending)</h2>
+    
+    <p>
+        Logged in as <b>{{ current_user.username }}</b>
+        | <a href="/logout">Logout</a>
+    </p>
+
+    <p>
+        <a href="/admin/pending"><button>Pending view</button></a>
+        <a href="/admin/all"><button>View all requests</button></a>
+    </p>
+
+    <hr>
+
+    {% if requests %}
+    {% for req in requests %}
+    <div style="border:1px solid #ccc; padding:12px; margin:10px 0;">
+        <p><b>ID:</b> {{ req.id }}</p>
+        <p><b>User:</b> {{ req.user.username }}</p>
+        <p><b>Channel:</b> {{ req.channel.name }}</p>
+        <p><b>Music type:</b> {{ req.music_type }}</p>
+        <p>
+            <b>Date:</b> {{ req.date_from }} - {{ req.date_to }}<br>
+            <b>Time:</b> {{ req.time_from.strftime("%H:%M") }} - {{ req.time_to.strftime("%H:%M") }}
+        </p>
+        <p><b>Status:</b> {{ req.status }}</p>
+
+        <form method="POST" action="/admin/set-status/{{ req.id }}">
+            <button name="status" value="APPROVED" type="submit">Approve</button>
+            <button name="status" value="DECLINED" type="submit">Decline</button>
+        </form>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p>No pending requests</p>
+    {% endif %}
+</body>
+</html>

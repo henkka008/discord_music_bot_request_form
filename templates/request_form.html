@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if mode == "edit" %}Edit{% else %}New{% endif %} Request</title>
+</head>
+<body>
+    <h2>{% if mode == "edit" %}Edit{% else %}Create{% endif %} Request</h2>
+
+    <p>
+        <a href="/user/dashboard">Back to dashboard</a>
+        | <a href="/logout">Logout</a>
+    </p>
+
+    <hr>
+
+    <form method="post" action="{% if mode == 'edit' %}/user/edit/{{ req.id }}{% else %}/user/new{% endif %}">
+
+        <label>Date from:</label><br>
+        <input type="date" name="date_from" value="{% if mode == 'edit' %}{{ req.date_from }}{% endif %}" required><br><br>
+        
+        <label>Date to:</label><br>
+        <input type="date" name="date_to" value="{% if mode == 'edit' %}{{ req.date_to }}{% endif %}" required><br><br>
+
+        <label>Time from:</label><br>
+        <input type="time" name="time_from" value="{% if mode == 'edit' %}{{ req.time_from.strftime('%H:%M') }}{% endif %}" required><br><br>
+
+        <label>Time to:</label><br>
+        <input type="time" name="time_to" value="{% if mode == 'edit' %}{{ req.time_to.strftime('%H:%M') }}{% endif %}" required><br><br>
+        
+        <label>Discord channel</label><br>
+        <select name="channel_id" required>
+            {% for ch in channels %}
+             <option value="{{ ch.id}}"
+               {% if mode == 'edit' and req.channel_id == ch.id %}selected{% endif %}>
+               {{ ch.name }}
+             </option>
+            {% endfor %}
+        </select><br><br>
+
+        <label>Music type:</label><br>
+        <input type="text" name="music_type"
+               value="{% if mode == 'edit' %}{{ req.music_type }}{% endif %}"
+               placeholder="e.g. lofi, edm, metal..." required><br><br>
+        
+        <button type="submit">{% if mode == "edit" %}Save{% else %}Send{% endif %}</button>
+    </form>
+</body>
+</html>

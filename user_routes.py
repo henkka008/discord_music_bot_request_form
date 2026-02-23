@@ -1,7 +1,7 @@
 from datetime import datetime
 from flask import Blueprint, render_template, request, redirect, url_for, abort
 from flask_login import login_required, current_user
-from app import db
+from extensions import db
 from models import MusicRequest, DiscordChannel
 
 user_bp = Blueprint("user", __name__)
@@ -32,8 +32,8 @@ def create_form():
     #Expecing HTML inputs:
     #date_from, date_to as DD-MM-YYYY
     #time_from, time_to as HH:MM
-    date_from = datetime.strptime(request.form["date_from"], "%d-%m-%Y").date()
-    date_to = datetime.strptime(request.form["date_to"], "%d-%m-%Y").date()
+    date_from = datetime.strptime(request.form["date_from"], "%Y-%m-%d").date()
+    date_to = datetime.strptime(request.form["date_to"], "%Y-%m-%d").date()
     time_from = datetime.strptime(request.form["time_from"], "%H:%M").time()
     time_to =datetime.strptime(request.form["time_to"], "%H:%M").time()
 
@@ -54,7 +54,7 @@ def create_form():
     db.session.commit()
 
     #"Send to admin" in MVP just means: it exists in DB as PENDING.
-    return redirect(url_for("user_dashboard"))
+    return redirect(url_for("user.dashboard"))
 
 @user_bp.get("/edit/<int:req_id>")
 @login_required
@@ -69,7 +69,7 @@ def edit_form(req_id):
     channels = DiscordChannel.query.order_by(DiscordChannel.name).all()
     return render_template("request_form.html", channels=channels, req=mr, mode="edit")
 
-@user_bp.get("/edit/<int:req_id>")
+@user_bp.post("/edit/<int:req_id>")
 @login_required
 def update_form(req_id):
     require_user()
@@ -94,7 +94,7 @@ def update_form(req_id):
 def delete_form(req_id):
     require_user()
     mr = MusicRequest.query.get_or_404(req_id)
-    if mr.user.id != current_user.id:
+    if mr.user_id != current_user.id:
         abort(403)
     if mr.status != "PENDING":
         abort(400)

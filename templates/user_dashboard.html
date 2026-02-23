@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+</head>
+<body>
+    <h2>User Dashboard</h2>
+    <p>
+        Logged in as <b>{{ current_user.username }}</b>
+        <a href="/logout">Logout</a>
+    </p>
+    <p>
+        <a href="/user/new"><button>Create new request</button></a>
+    </p>
+    
+    <hr>
+
+    {% if requests %}
+    {% for req in request %}
+    <div style="border:1px solid #ccc; padding:12px; margin:10px 0;">
+        <p><b>ID:</b> {{ req.id }}</p>
+
+        <p>
+            <b>Date:</b> {{ req.date_from }} - {{ req.date_to }}<br>
+            <b>Time:</b> {{ req.time_from.strftime("%H:%M") }} - {{ req.time_to.strftime("%H:%M") }}
+        </p>
+        
+
+        <p><b>Channel:</b> {{ req.channel.name }}</p>
+        <p><b>Music type:</b> {{ req.music_type }}</p>
+        <p><b>Status:</b> {{ req.status }}</p>
+
+        {% if req.status == "PENDING" %}
+            <a href="/user/edit/{{ req.id }}"><button>Edit</button></a>
+
+            <form method="POST" action="/user/delete/{{ req.id }}" style="display: inline;" onsubmit="return confirm('Delete this request?');">
+                <button type="submit">Delete</button>
+            </form>
+            {% else %}
+                <small>(Approved/Declined requests can't be edited)</small>
+            {% endif %}
+    </div>
+    {% endfor %}
+    {% else %}
+        <p>No requests yet. Create one!</p>
+    {% endif %}
+</body>
+</html>

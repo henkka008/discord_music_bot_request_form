@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Admin</title>
+</head>
+<body>
+    <h2>Register Admin</h2>
+    <form method="POST" action="/register">
+        <input name="username" placeholder="Username" required />
+        <input name="password" placeholder="Password" type="password" required />
+        <input name="invite_code" placeholder="Invite Code" required />
+        <button type="submit">Create Account</button>
+    </form>
+    <a href="/login/admin">Back to Admin Login</a>
+</body>
+</html>

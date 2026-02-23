@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, abort
 from flask_login import login_required, current_user
-from app import db
+from extensions import db
 from models import MusicRequest
 
 admin_bp = Blueprint("admin", __name__)
@@ -14,7 +14,7 @@ def require_admin():
 def pending_view():
     require_admin()
     pending= MusicRequest.query.filter_by(status="PENDING").order_by(MusicRequest.created_at.asc()).all()
-    return render_template("admin_dashboard_pending_html", request=pending)
+    return render_template("admin_dashboard_pending.html", requests=pending)
 
 @admin_bp.get("/all")
 @login_required

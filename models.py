@@ -1,6 +1,6 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from flask_login import UserMixin
-from app import db
+from extensions import db
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -30,5 +30,5 @@ class MusicRequest(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     user = db.relationship("User")
 
-    created_at = db.Column(db.DateTime, default=datetime.now())
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     

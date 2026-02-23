@@ -6,3 +6,4 @@ to implement
 -date/time input formatting so your example 1.1.2026 17:00-19:00 displays nicely on the dashboard
 -admin can update the pending request to request more information which user needs to specify
 -when admin declines he can also add comment to why it was declined
+-admin can add more channels if new ones come
