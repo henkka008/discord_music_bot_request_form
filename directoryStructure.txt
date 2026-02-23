@@ -16,3 +16,5 @@ discord-music-bot-form/
     styles.css
   instance/
     app.db
+
+this is a idea of what the files would be
