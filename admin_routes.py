@@ -25,7 +25,7 @@ def all_view():
     if status in {"PENDING", "APPROVED", "DECLINED"}:
         q = q.filter_by(status=status)
     all_reqs = q.order_by(MusicRequest.created_at.desc()).all()
-    return render_template("admin_dashboard.html", requests=all_reqs, status=status)
+    return render_template("admin_dashboard_all.html", requests=all_reqs, status=status)
 
 @admin_bp.post("/set-status/<int:req_id>")
 @login_required
@@ -41,6 +41,7 @@ def set_status(req_id):
 
     #user "update" happens automatically because dashboard reads from DB.
     return redirect(request.referrer or url_for("admin.pending_view"))
+
 
 @admin_bp.get("/channels")
 @login_required
