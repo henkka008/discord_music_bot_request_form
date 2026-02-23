@@ -1,0 +1,18 @@
+discord-music-bot-form/
+  app.py
+  models.py
+  auth.py
+  user_routes.py
+  admin_routes.py
+  templates/
+    index.html
+    login_user.html
+    login_admin.html
+    user_dashboard.html
+    request_form.html
+    admin_dashboard_pending.html
+    admin_dashboard_all.html
+  static/
+    styles.css
+  instance/
+    app.db
