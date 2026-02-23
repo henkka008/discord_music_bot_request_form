@@ -6,6 +6,15 @@
     <title>Discord Music Bot Request Form</title>
 </head>
 <body>
+    {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul>
+      {% for msg in messages %}
+        <li>{{ msg }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
     <h1>Discord Music Bot Request Form</h1>
     <a href="/login/user"><button>User Login</button></a>
     <a href="/login/admin"><button>Admin Login</button></a>

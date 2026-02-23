@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Manage Channels</title>
+</head>
+<body>
+    <h2>Manage Channels</h2>
+
+    <p>
+        Logged in as <b>{{ current_user.username }}</b>
+        | <a href="/logout">Logout</a>
+    </p>
+
+    <p>
+        <a href="/admin/pending"><button>Pending View</button></a>
+        <a href="/admin/all"><button>View All Requests</button></a>
+        <a href="/admin/channels"><button>Manage Channels</button></a>
+    </p>
+
+    <hr>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div style="padding:10px; border:1px solid #ccc; margin-bottom: 15px;">
+                {% for msg in messages %}
+                    <p>{{ msg }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+    
+    <h3>Add New Channel</h3>
+
+    <form method="POST" action="/admin/channels/add">
+        <input type="text" name="name" placeholder="e.g. General" required>
+        <button type="submit">Add Channel</button>
+    </form>
+
+    <hr>
+
+    <h3>Existing Channels</h3>
+
+    {% if channels %}
+        {% for ch in channels %}
+        <div style="border:1px solid #ccc; padding: 10px; margin:8px 0;">
+            <b>{{ ch.name }}</b>
+
+            <form method="POST"
+                  action="/admin/channels/delete/{{ ch.id }}"
+                  style="display:inline;"
+                  onsubmit="return confirm('Delete {{ ch.name }} ?')">
+                <button type="submit">Delete</button>
+            </form>
+        </div>
+    {% endfor %}
+    {% else %}
+        <p>No channels yet. Add one above.</p>
+    {% endif %}
+</body>
+</html>
