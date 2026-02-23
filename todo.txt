@@ -4,6 +4,7 @@ Not critical but would be nice:
 -Email or Discord DM notification
 -Audit log: who approved, when, admin note, etc.
 -Real-time updates using WebSockets (Flask-SocketIO)
+-Mobile phone scaling
 
 Next up coming:
 -date/time input formatting so your example 1.1.2026 17:00-19:00 displays nicely on the dashboard
