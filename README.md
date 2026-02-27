@@ -26,3 +26,6 @@ ADMIN_INVITE_CODE=<THIS WILL BE THE INVITE CODE THAT IS REQUIRED TO CREATE ADMIN
 Then run the app:
 python3 app.py
 http://127.0.0.1:5000
+
+
+> This started as a joke idea — but the real goal was practicing building full-stack Python applications.
