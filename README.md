@@ -28,4 +28,5 @@ python3 app.py
 http://127.0.0.1:5000
 
 ```
-> This started as a joke idea — but the real goal was practicing building full-stack Python applications.
+
+This started as a joke idea - but the real goal was practicing building full-stack Python applications.
